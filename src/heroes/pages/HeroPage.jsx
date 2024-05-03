@@ -6,8 +6,7 @@ import { getHeroById } from '../';
 export const HeroPage = () => {
   const { id } = useParams()
 
-  const hero = getHeroById( id )
-  // const hero = useMemo( () => { getHeroById( id ) }, [id]  ) 
+  const hero = useMemo( () => { getHeroById( id ) }, [id]  ) 
 
   const navigate = useNavigate()
 
@@ -23,7 +22,7 @@ export const HeroPage = () => {
     <div className="row mt-5">
       <div className="col-4 animate__animated animate__fadeInLeft">
         <img 
-          src={`/assets/heroes/${ id }.jpg`} 
+          src={`/heroes/${ id }.jpg`} 
           alt={ hero.superhero } 
           className="img-thumbnail"
         />

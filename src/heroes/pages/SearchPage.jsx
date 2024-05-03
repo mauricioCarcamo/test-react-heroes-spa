@@ -2,6 +2,7 @@ import { HeroCard, getHeroesByName } from '../'
 import { useForm } from '../../hooks'
 import { useLocation, useNavigate } from 'react-router-dom'
 import queryString from 'query-string'
+import { useMemo } from 'react'
 
 export const SearchPage = () => {
 
@@ -12,8 +13,10 @@ export const SearchPage = () => {
   const { q = '' } = queryString.parse( location.search )
 
   const heroes = getHeroesByName( q )
+
+  // const heroes = useMemo(() => { getHeroesByName( q ) }, [ q ])
   
-  const { searchText, onInputChange, onResetForm } = useForm({ searchText: ''})
+  const { searchText, onInputChange, onResetForm } = useForm({ searchText: q })
 
   const showSearchAlert = ( q.length === 0)
 
@@ -52,7 +55,7 @@ export const SearchPage = () => {
         </div>
 
         <div className="col-7">
-          <h4>Result</h4>
+          <h4>Results: { heroes.length }</h4>
           <hr />
 
           <div className={`alert alert-primary ${(showSearchAlert ? '' : 'd-none')}` }>
@@ -63,9 +66,13 @@ export const SearchPage = () => {
             No hero with <b>{ q }</b>
           </div>
 
+          <div className='d-flex flex-column gap-2'>
           {
             heroes.map( hero => <HeroCard key={ hero.id } { ...hero }/> )
           }
+          </div>
+
+
         </div>
       </div>
     </>
